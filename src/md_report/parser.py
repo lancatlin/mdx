@@ -1,29 +1,29 @@
 import re
-from dataclasses import dataclass
 from md_report.frontmatter import FrontMatter
 from .command import Command
+from .document import Document
 
-@dataclass
 class Parser:
-    frontmatter: FrontMatter
-    content: str
-    commands: list[Command]
+    def __init__(self, data: str):
+        self.data = data
 
-    @classmethod
-    def from_content(cls, data_input: str) -> 'Parser':
+    def parse(self) -> Document:
+        (front_data, content) = self._split_data()
+        frontmatter = FrontMatter.from_yaml(front_data)
+        commands = self._parseCommand()
+        return Document(frontmatter, content, commands)
+
+    def _split_data(self) -> tuple[str, str]:
         pattern = re.compile(r'^---\n(.*?)---\n+(.*?)$', re.DOTALL)
-        match = pattern.search(data_input)
+        match = pattern.search(self.data)
         if match == None:
             raise Exception("Frontmatter not found")
-        frontmatter = FrontMatter.from_yaml(match.group(1))
-        content = match.group(2)
-        return cls(frontmatter, content, Parser.parseCommand(content))
+        return (match.group(1), match.group(2))
 
-    @staticmethod
-    def parseCommand(content: str) -> list[Command]:
+    def _parseCommand(self) -> list[Command]:
         command_pattern = re.compile(r'\{\{(.*?)\}\}')
         commands = []
-        for match in command_pattern.finditer(content):
+        for match in command_pattern.finditer(self.data):
             command = Command(match.group(1), match.start(0), match.end(0))
             commands.append(command)
         return commands

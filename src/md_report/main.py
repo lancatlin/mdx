@@ -4,8 +4,9 @@ def main() -> None:
     filename = "ledger.md"
     with open(filename, 'r') as file:
         content = file.read()
-        parser = Parser.from_content(content)
-        print(parser)
+        parser = Parser(content)
+        doc = parser.parse()
+        print(doc)
 
 if __name__ == '__main__':
     main()

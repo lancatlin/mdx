@@ -17,6 +17,5 @@ class FrontMatter(BaseModel):
                 params[key] = Parameter(name=key, **value)
             else:
                 params[key] = Parameter(name=key)
-        print(params)
         
         return cls(name=name, params=params)
