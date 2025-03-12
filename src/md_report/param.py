@@ -6,6 +6,6 @@ from pydantic import BaseModel
 
 class Parameter(BaseModel):
     name: str
-    required: bool
-    default: str | None
-    alias: str
+    required: bool = False
+    default: str | None = None
+    alias: str | None = None

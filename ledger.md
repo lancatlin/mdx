@@ -1,14 +1,15 @@
 ---
 name: "report_{from}_{to}.md"
-from:
-  type: str
-  required: true
-to:
-  type: str
-  required: true
-file:
-  type: str
-  default: ledger.j
+params:
+  from:
+    type: str
+    required: true
+  to:
+    type: str
+    required: true
+  file:
+    type: str
+    default: ledger.j
 ---
 
 # Finance Report from {from} to {to}
