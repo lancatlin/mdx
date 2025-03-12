@@ -1,4 +1,4 @@
-from md_report.parser import Parser
+from .parser import Parser
 
 def main() -> None:
     filename = "ledger.md"
@@ -7,6 +7,3 @@ def main() -> None:
         parser = Parser(content)
         doc = parser.parse()
         print(doc)
-
-if __name__ == '__main__':
-    main()
