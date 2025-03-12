@@ -1,9 +1,11 @@
 from dataclasses import dataclass
-from md_report.frontmatter import FrontMatter
+from .frontmatter import FrontMatter
 from .command import Command
+from .variable import Variable
 
 @dataclass
 class Document:
     frontmatter: FrontMatter
     content: str
     commands: list[Command]
+    variables: list[Variable]

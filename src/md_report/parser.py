@@ -1,6 +1,7 @@
 import re
 from .frontmatter import FrontMatter
 from .command import Command
+from .variable import Variable
 from .document import Document
 
 class Parser:
@@ -9,9 +10,10 @@ class Parser:
 
     def parse(self) -> Document:
         (front_data, content) = self._split_data()
-        frontmatter = FrontMatter.from_yaml(front_data)
+        self.frontmatter = FrontMatter.from_yaml(front_data)
         commands = self._parseCommand(content)
-        return Document(frontmatter, content, commands)
+        variables = self._parseVariables(content)
+        return Document(self.frontmatter, content, commands, variables)
 
     def _split_data(self) -> tuple[str, str]:
         pattern = re.compile(r'^---\n(.*?)---\n+(.*?)$', re.DOTALL)
@@ -20,10 +22,23 @@ class Parser:
             raise Exception("Frontmatter not found")
         return (match.group(1), match.group(2))
 
-    def _parseCommand(self, content: str) -> list[Command]:
-        command_pattern = re.compile(r'\{\{(.*?)\}\}')
+    @staticmethod
+    def _parseCommand(content: str) -> list[Command]:
+        pattern = re.compile(r'(?<!\{)\{([^{}]*?)\}(?!\})')
         commands = []
-        for match in command_pattern.finditer(content):
+        for match in pattern.finditer(content):
             command = Command(match.group(1), match.start(0), match.end(0))
             commands.append(command)
         return commands
+
+    def _parseVariables(self, content: str) -> list[Variable]:
+        pattern = re.compile(r'(?<!\{)\{([^{}]*?)\}(?!\})')
+        variables = []
+        for match in pattern.finditer(content):
+            print(match.group(0))
+            name = match.group(1)
+            param = self.frontmatter.params.get(name)
+            if param is None:
+                raise Exception(f'Undefined variable: {name}')
+            variables.append(Variable(param, match.start(0), match.end(0)))
+        return variables
