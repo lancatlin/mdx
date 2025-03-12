@@ -1,0 +1,3 @@
+logfire
+pydantic
+mypy>=1.8.0 
