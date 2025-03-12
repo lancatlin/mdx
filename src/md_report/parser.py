@@ -1,20 +1,18 @@
 import re
-import yaml
-from io import StringIO
+from dataclasses import dataclass
 from md_report.frontmatter import FrontMatter
 
+@dataclass
 class Parser:
-    def __init__(self, content: str):
-        self.content = content
-        self.frontmatter = self.parseFrontMatter()
-    
-    def parseFrontMatter(self) -> FrontMatter | None:
-        pattern = re.compile(r'---\n(.*?)---\n', re.DOTALL)
-        match = pattern.search(self.content)
+    frontmatter: FrontMatter
+    content: str
+
+    @classmethod
+    def parse(cls, data_input: str) -> 'Parser':
+        pattern = re.compile(r'^---\n(.*?)---\n+(.*?)$', re.DOTALL)
+        match = pattern.search(data_input)
         if match == None:
-            return None
-        data: str = match.group(1)
-        print(data)
-        frontmatter = FrontMatter.from_yaml(data)
-        print(frontmatter)
-        return None
+            raise Exception("Frontmatter not found")
+        frontmatter = FrontMatter.from_yaml(match.group(1))
+        content = match.group(2)
+        return cls(frontmatter, content)

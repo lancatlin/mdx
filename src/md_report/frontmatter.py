@@ -1,7 +1,6 @@
 from pydantic import BaseModel
 import yaml
 from .param import Parameter
-from typing import Any
 
 class FrontMatter(BaseModel):
     name: str
