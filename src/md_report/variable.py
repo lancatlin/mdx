@@ -6,5 +6,5 @@ from .expression import Expression
 class Variable(Expression):
     param: Parameter
 
-    def execute(self) -> str:
+    def execute(self, _: dict[str, str]) -> str:
         return f"{self.param.value}"

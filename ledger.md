@@ -15,21 +15,9 @@ params:
 
 {{hledger -f $file bal -e $from -t}}
 
-```
-
-              $66606  assets:bank
-               $4775  expenses:server
-             $-71381  income
-             $-71080    award
-                 $-1    interest
-               $-300    salary
---------------------
-                   0
-```
-
 ## Expenses:
 
-{{hledger -f $file reg expenses -b $from -e $end}}
+{{hledger -f $file reg expenses -b $from -e $to}}
 
 ## Ending balance:
 

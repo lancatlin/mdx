@@ -7,5 +7,5 @@ class Expression(ABC):
     end: int
 
     @abstractmethod
-    def execute(self) -> str:
+    def execute(self, env: dict[str, str]) -> str:
         pass

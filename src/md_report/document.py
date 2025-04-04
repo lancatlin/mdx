@@ -11,6 +11,7 @@ class Document:
     content: str
     commands: list[Command]
     variables: list[Variable]
+    env: dict[str, str] | None = None
 
     def _get_expressions(self) -> list[Expression]:
         separates: list[Expression] = [*self.commands, *self.variables]
@@ -21,10 +22,13 @@ class Document:
     def execute(self) -> str:
         result = ""
         cursor = 0
+        if self.env is None:
+            raise Exception('Environment is not defined')
+
         for exp in self._get_expressions():
             print(f"cursor: {cursor} start: {exp.start}")
             result += self.content[cursor:exp.start]
-            result += exp.execute()
+            result += exp.execute(self.env)
             cursor = exp.end
         result += self.content[cursor:]
         return result
@@ -46,5 +50,5 @@ class Document:
         for _, param in self.frontmatter.params.items():
             value = argv[param.name]
             param.set(value)
-
+        self.env = argv
         
