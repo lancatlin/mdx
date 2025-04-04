@@ -6,4 +6,4 @@ def main() -> None:
         content = file.read()
         parser = Parser(content)
         doc = parser.parse()
-        print(doc)
+        print(doc.execute())

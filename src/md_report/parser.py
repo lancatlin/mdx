@@ -24,10 +24,10 @@ class Parser:
 
     @staticmethod
     def _parseCommand(content: str) -> list[Command]:
-        pattern = re.compile(r'(?<!\{)\{([^{}]*?)\}(?!\})')
+        pattern = re.compile(r'\{\{(.*?)\}\}')
         commands = []
         for match in pattern.finditer(content):
-            command = Command(match.group(1), match.start(0), match.end(0))
+            command = Command(match.start(0), match.end(0), match.group(1))
             commands.append(command)
         return commands
 
@@ -40,5 +40,5 @@ class Parser:
             param = self.frontmatter.params.get(name)
             if param is None:
                 raise Exception(f'Undefined variable: {name}')
-            variables.append(Variable(param, match.start(0), match.end(0)))
+            variables.append(Variable(match.start(0), match.end(0), param))
         return variables

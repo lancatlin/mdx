@@ -20,6 +20,8 @@ include = ["py.typed"]
 [tool.poetry.group.dev.dependencies]
 mypy = "^1.8.0"
 types-pyyaml = "^6.0.12.20241230"
+pytest = "^8.3.5"
+ruff = "^0.11.3"
 
 [tool.mypy]
 python_version = "3.12"
@@ -38,3 +40,17 @@ strict_equality = true
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.scripts]
+start = "md_report.main:main"
+dev = "md_report.scripts:dev_command"
+test = "pytest"
+lint = "ruff check src"
+typecheck = "mypy src"
+check = "poetry run lint && poetry run typecheck && poetry run test"
+
+[tool.ruff]
+select = ["E", "F", "I", "N", "W", "B"]
+ignore = []
+fixable = ["ALL"]
+unfixable = []

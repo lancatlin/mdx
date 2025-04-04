@@ -1,8 +1,10 @@
 from dataclasses import dataclass
 from .param import Parameter
+from .expression import Expression
 
 @dataclass
-class Variable:
+class Variable(Expression):
     param: Parameter
-    start: int
-    end: int
+
+    def execute(self) -> str:
+        return f"${self.param.name}"

@@ -1,7 +1,9 @@
 from dataclasses import dataclass
+from .expression import Expression
 
 @dataclass
-class Command:
+class Command(Expression):
     command: str
-    start: int
-    end: int
+
+    def execute(self) -> str:
+        return f"```\n{self.command}\n```\n"
