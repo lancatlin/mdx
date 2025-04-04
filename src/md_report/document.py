@@ -4,6 +4,7 @@ from .frontmatter import FrontMatter
 from .command import Command
 from .variable import Variable
 from .expression import Expression
+import string
 
 @dataclass
 class Document:
@@ -52,3 +53,8 @@ class Document:
             param.set(value)
         self.env = argv
         
+    def get_filename(self) -> str:
+        if self.env is None:
+            return self.frontmatter.name
+        filename = string.Template(self.frontmatter.name).substitute(self.env)
+        return filename

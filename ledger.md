@@ -1,5 +1,5 @@
 ---
-name: "report_{from}_{to}.md"
+name: "report_${from}_${to}.md"
 params:
   from:
     required: true
