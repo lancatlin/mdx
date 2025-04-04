@@ -43,10 +43,6 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.poetry.scripts]
 start = "mdx.main:main"
-test = "pytest"
-lint = "ruff check src"
-typecheck = "mypy src"
-check = "poetry run lint && poetry run typecheck && poetry run test"
 
 [tool.ruff]
 select = ["E", "F", "I", "N", "W", "B"]
