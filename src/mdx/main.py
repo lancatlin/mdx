@@ -1,4 +1,5 @@
 from .parser import Parser
+import sys
 
 def main() -> None:
     filename = "ledger.md"
@@ -7,7 +8,7 @@ def main() -> None:
 
     parser = Parser(content)
     doc = parser.parse()
-    doc.parse_arg(['--from', '2024-01-01', '--to', '2024-12-31'])
+    doc.parse_arg(sys.argv[1:])
     output = doc.execute()
     with open(doc.get_filename(), "w") as wfile:
         wfile.write(output)

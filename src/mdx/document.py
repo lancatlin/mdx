@@ -36,7 +36,7 @@ class Document:
 
     def parse_arg(self, args: list[str]) -> None:
         parser = argparse.ArgumentParser(
-            prog="mdx",
+            prog=f"mdx",
             description="Executing Markdown Template",
         )
         for _, param in self.frontmatter.params.items():
@@ -46,6 +46,7 @@ class Document:
                 required=param.required, 
                 default=param.default
             )
+        print(args)
         argv = vars(parser.parse_args(args))
         print(argv)
         for _, param in self.frontmatter.params.items():
