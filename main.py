@@ -1,4 +1,4 @@
-from md_report import main
+from mdx import main
 
 if __name__ == '__main__':
     main()

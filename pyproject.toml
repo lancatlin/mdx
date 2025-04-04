@@ -1,5 +1,5 @@
 [project]
-name = "md-report"
+name = "mdx"
 version = "0.1.0"
 description = ""
 authors = [
@@ -14,7 +14,7 @@ dependencies = [
 ]
 
 [tool.poetry]
-packages = [{include = "md_report", from = "src"}]
+packages = [{include = "mdx", from = "src"}]
 include = ["py.typed"]
 
 [tool.poetry.group.dev.dependencies]
@@ -42,8 +42,7 @@ requires = ["poetry-core>=2.0.0,<3.0.0"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.poetry.scripts]
-start = "md_report.main:main"
-dev = "md_report.scripts:dev_command"
+start = "mdx.main:main"
 test = "pytest"
 lint = "ruff check src"
 typecheck = "mypy src"
