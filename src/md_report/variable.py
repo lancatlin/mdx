@@ -7,4 +7,4 @@ class Variable(Expression):
     param: Parameter
 
     def execute(self) -> str:
-        return f"${self.param.name}"
+        return f"{self.param.value}"

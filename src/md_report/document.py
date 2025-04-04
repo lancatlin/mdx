@@ -1,3 +1,4 @@
+import argparse
 from dataclasses import dataclass
 from .frontmatter import FrontMatter
 from .command import Command
@@ -11,7 +12,7 @@ class Document:
     commands: list[Command]
     variables: list[Variable]
 
-    def _get_separates(self) -> list[Expression]:
+    def _get_expressions(self) -> list[Expression]:
         separates: list[Expression] = [*self.commands, *self.variables]
         sorted_arr = sorted(separates, key=lambda exp: exp.start)
         print(sorted_arr)
@@ -20,10 +21,30 @@ class Document:
     def execute(self) -> str:
         result = ""
         cursor = 0
-        for exp in self._get_separates():
+        for exp in self._get_expressions():
             print(f"cursor: {cursor} start: {exp.start}")
             result += self.content[cursor:exp.start]
             result += exp.execute()
             cursor = exp.end
         result += self.content[cursor:]
         return result
+
+    def parse_arg(self, args: list[str]) -> None:
+        parser = argparse.ArgumentParser(
+            prog="mdx",
+            description="Executing Markdown Template",
+        )
+        for _, param in self.frontmatter.params.items():
+            print(param)
+            parser.add_argument(
+                f'--{param.name}', 
+                required=param.required, 
+                default=param.default
+            )
+        argv = vars(parser.parse_args(args))
+        print(argv)
+        for _, param in self.frontmatter.params.items():
+            value = argv[param.name]
+            param.set(value)
+
+        

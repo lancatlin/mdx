@@ -9,3 +9,10 @@ class Parameter(BaseModel):
     required: bool = False
     default: str | None = None
     alias: str | None = None
+    value: str | None = None
+
+    def set(self, value: str | None) -> None:
+        if value is None:
+            self.value = self.default
+        else:
+            self.value = value
