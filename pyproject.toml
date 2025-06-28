@@ -1,27 +1,26 @@
-[project]
-name = "mdx"
-version = "0.1.0"
-description = ""
-authors = [
-    {name = "Justin Lin",email = "wancat@wancat.cc"}
-]
-readme = "README.md"
-requires-python = ">=3.12"
-dependencies = [
-    "pydantic (>=2.10.6,<3.0.0)",
-    "logfire (>=3.8.0,<4.0.0)",
-    "pyyaml (>=6.0.2,<7.0.0)"
-]
-
 [tool.poetry]
-packages = [{include = "mdx", from = "src"}]
+name = "mdsh"
+version = "0.1.0"
+description = "Run markdown templates with shell scripts"
+authors = ["Justin Lin <wancat@wancat.cc>"]
+readme = "README.md"
+packages = [{include = "mdsh", from = "src"}]
 include = ["py.typed"]
+
+[tool.poetry.dependencies]
+python = ">=3.12"
+pydantic = ">=2.10.6,<3.0.0"
+logfire = ">=3.8.0,<4.0.0"
+pyyaml = ">=6.0.2,<7.0.0"
 
 [tool.poetry.group.dev.dependencies]
 mypy = "^1.8.0"
 types-pyyaml = "^6.0.12.20241230"
 pytest = "^8.3.5"
 ruff = "^0.11.3"
+
+[tool.poetry.scripts]
+start = "mdsh.main:main"
 
 [tool.mypy]
 python_version = "3.12"
@@ -40,9 +39,6 @@ strict_equality = true
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]
 build-backend = "poetry.core.masonry.api"
-
-[tool.poetry.scripts]
-start = "mdx.main:main"
 
 [tool.ruff]
 select = ["E", "F", "I", "N", "W", "B"]

@@ -1,4 +1,4 @@
-from mdx import main
+from mdsh import main
 
 if __name__ == '__main__':
     main()

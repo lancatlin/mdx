@@ -34,9 +34,9 @@ class Document:
         result += self.content[cursor:]
         return result
 
-    def parse_arg(self, args: list[str]) -> None:
+    def parse_arg(self, filename: str, args: list[str]) -> None:
         parser = argparse.ArgumentParser(
-            prog=f"mdx",
+            prog=f"mdsh {filename}",
             description="Executing Markdown Template",
         )
         for _, param in self.frontmatter.params.items():
