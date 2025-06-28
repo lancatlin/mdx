@@ -1,5 +1,7 @@
-from .parser import Parser
 import sys
+
+from .parser import Parser
+
 
 def main() -> None:
     if len(sys.argv) < 2:

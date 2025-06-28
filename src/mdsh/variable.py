@@ -1,6 +1,8 @@
 from dataclasses import dataclass
-from .param import Parameter
+
 from .expression import Expression
+from .param import Parameter
+
 
 @dataclass
 class Variable(Expression):

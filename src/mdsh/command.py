@@ -1,8 +1,9 @@
-from dataclasses import dataclass
-from .expression import Expression
-import subprocess
 import string
-import os
+import subprocess
+from dataclasses import dataclass
+
+from .expression import Expression
+
 
 @dataclass
 class Command(Expression):
@@ -18,11 +19,11 @@ class Command(Expression):
         print(command)
         try:
             result = subprocess.run(
-                command, 
-                shell=True, 
-                capture_output=True, 
-                text=True, 
-                env=env, 
+                command,
+                shell=True,
+                capture_output=True,
+                text=True,
+                env=env,
                 check=True,
                 encoding='utf-8'
             )
@@ -36,4 +37,5 @@ class Command(Expression):
         try:
             return template.substitute(env)
         except KeyError as e:
-            raise Exception(f'Undefined variable: {e} in command "{self.command}"')
+            raise Exception(f'Undefined variable: {e} in command "{self.command}"') \
+            from e

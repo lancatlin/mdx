@@ -1,6 +1,8 @@
-from pydantic import BaseModel
 import yaml
+from pydantic import BaseModel
+
 from .param import Parameter
+
 
 class FrontMatter(BaseModel):
     name: str
@@ -11,11 +13,11 @@ class FrontMatter(BaseModel):
         data = yaml.safe_load(yaml_content)
         name = data['name']
         params: dict[str, Parameter] = {}
-        
+
         for key, value in data['params'].items():
             if isinstance(value, dict):
                 params[key] = Parameter(name=key, **value)
             else:
                 params[key] = Parameter(name=key)
-        
+
         return cls(name=name, params=params)
